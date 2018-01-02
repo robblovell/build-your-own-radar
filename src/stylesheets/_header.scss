@@ -95,6 +95,22 @@ header {
         color: white;
         background-color: $violet;
       }
+      &.fifth {
+        color: white;
+        background-color: $yellow;
+      }
+      &.sixth {
+        color: white;
+        background-color: $red;
+      }
+      &.seventh {
+        color: white;
+        background-color: $purple;
+      }
+      &.eighth {
+        color: white;
+        background-color: $cyan;
+      }
     }
 
     &.full-view {
@@ -112,6 +128,22 @@ header {
       }
       &.fourth {
         background-color: $violet;
+        color: $white;
+      }
+      &.fifth {
+        background-color: $yellow;
+        color: $white;
+      }
+      &.sixth {
+        background-color: $red;
+        color: $white;
+      }
+      &.seventh {
+        background-color: $purple;
+        color: $white;
+      }
+      &.eighth {
+        background-color: $cyan;
         color: $white;
       }
     }

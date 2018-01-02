@@ -6,8 +6,6 @@
 @import 'header';
 @import 'footer';
 
-@import url(https://www.thoughtworks.com/css/screen.css);
-
 body {
   font: 18px 'Open Sans';
   -webkit-font-smoothing: antialiased;
@@ -56,6 +54,18 @@ body {
     &.fourth .quadrant-table__name {
       color: $violet;
     }
+    &.fifth .quadrant-table__name {
+      color: $yellow;
+    }
+    &.sixth .quadrant-table__name {
+      color: $red;
+    }
+    &.seventh .quadrant-table__name {
+      color: $purple;
+    }
+    &.eighth .quadrant-table__name {
+      color: $cyan;
+    }
   }
 
   .quadrant-table {
@@ -73,7 +83,6 @@ body {
 
 
     h3 {
-
       page-break-before: always;
       padding: 0 10px;
       text-transform: uppercase;
@@ -170,17 +179,25 @@ body {
       }
 
       path {
-        &.ring-arc-3 {
+        &.ring-arc-5 {
+          stroke: none;
+          fill: $grey-lightest;
+        }
+        &.ring-arc-4 {
           stroke: none;
           fill: $grey-light;
         }
-        &.ring-arc-2 {
+        &.ring-arc-3 {
           stroke: none;
           fill: $grey;
         }
-        &.ring-arc-1 {
+        &.ring-arc-2 {
           stroke: none;
           fill: $grey-dark;
+        }
+        &.ring-arc-1 {
+          stroke: none;
+          fill: $grey-darker;
         }
         &.ring-arc-0 {
           stroke: none;
@@ -214,6 +231,22 @@ body {
           fill: $violet;
           stroke: none;
         }
+        &.fifth {
+          fill: $yellow;
+          stroke: none;
+        }
+        &.sixth {
+          fill: $red;
+          stroke: none;
+        }
+        &.seventh {
+          fill: $purple;
+          stroke: none;
+        }
+        &.eighth {
+          fill: $cyan;
+          stroke: none;
+        }
       }
 
       line {
@@ -231,7 +264,7 @@ body {
           font-weight: bold;
           text-transform: uppercase;
           fill: $black;
-          font-size: 11px;
+          font-size: 9px;
         }
       }
     }
@@ -260,7 +293,7 @@ body {
         right: 20px;
 
         &.selected {
-          float: right;
+          float: left;
         }
       }
 
@@ -284,10 +317,41 @@ body {
         right: 20px;
 
         &.selected {
-          float: right;
+          float: left;
         }
       }
 
+      &.fifth {
+        right: 20px;
+
+        &.selected {
+          float: left;
+        }
+      }
+
+      &.sixth {
+        right: 20px;
+
+        &.selected {
+          float: left;
+        }
+      }
+
+      &.seventh {
+        right: 20px;
+
+        &.selected {
+          float: left;
+        }
+      }
+
+      &.eight {
+        right: 20px;
+
+        &.selected {
+          float: left;
+        }
+      }
       &.selected {
         position: relative;
         max-height: 10000px;
@@ -341,3 +405,4 @@ body {
     }
   }
 }
+

@@ -1,35 +1,25 @@
-const _ = {
-  map: require('lodash/map'),
-  uniqBy: require('lodash/uniqBy'),
-  capitalize: require('lodash/capitalize'),
-  each: require('lodash/each')
-};
-
-const MalformedDataError = require('../../src/exceptions/malformedDataError');
-const ExceptionMessages = require('./exceptionMessages');
-
-
-const ContentValidator = function (columnNames) {
-  var self = {};
-  columnNames = columnNames.map(function(columnName) {
-    return columnName.trim();
-  });
-
-  self.verifyContent = function() {
-    if(columnNames.length == 0){
-      throw new MalformedDataError(ExceptionMessages.MISSING_CONTENT);
-    }
-  };
-
-  self.verifyHeaders = function() {
-    _.each(['name', 'ring', 'quadrant', 'isNew', 'description'], function (field) {
-      if (columnNames.indexOf(field) == -1) {
-        throw new MalformedDataError(ExceptionMessages.MISSING_HEADERS);
-      }
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var _ = require("lodash");
+var malformedDataError_1 = require("../../src/exceptions/malformedDataError");
+var exceptionMessages_1 = require("./exceptionMessages");
+var ContentValidator = function (columnNames) {
+    var self = {};
+    columnNames = columnNames.map(function (columnName) {
+        return columnName.trim();
     });
-  };
-
-  return self;
+    self.verifyContent = function () {
+        if (columnNames.length == 0) {
+            throw new malformedDataError_1.default(exceptionMessages_1.default.MISSING_CONTENT);
+        }
+    };
+    self.verifyHeaders = function () {
+        _.each(['name', 'ring', 'quadrant'], function (field) {
+            if (columnNames.indexOf(field) == -1) {
+                throw new malformedDataError_1.default(exceptionMessages_1.default.MISSING_HEADERS);
+            }
+        });
+    };
+    return self;
 };
-
-module.exports = ContentValidator;
+exports.default = ContentValidator;
