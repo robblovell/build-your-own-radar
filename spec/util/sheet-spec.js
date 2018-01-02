@@ -5,7 +5,11 @@ assert = chai.assert
 sinon = require('sinon')
 
 const Sheet = require('../../src/util/sheet').default;
-
+if (!before) {
+  var before = function(beforeFunc) {
+    beforeAll(beforeFunc)
+  }
+}
 describe('sheet', function () {
     var sheet;
     var callback = sinon.spy(); // caller = {callback: function (){}};

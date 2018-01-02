@@ -2,6 +2,11 @@ chai = require('chai')
 expect = chai.expect
 const InputSanitizer = require('../../src/util/inputSanitizer').default;
 
+if (!before) {
+    var before = function(beforeFunc) {
+        beforeAll(beforeFunc)
+    }
+}
 describe('InputSanitizer', function(){
     var sanitizer, rawBlip, blip;
 

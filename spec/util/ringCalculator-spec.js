@@ -4,7 +4,11 @@ should = chai.should()
 assert = chai.assert
 
 const RingCalculator = require('../../src/util/ringCalculator').default;
-
+if (!before) {
+  var before = function(beforeFunc) {
+    beforeAll(beforeFunc)
+  }
+}
 describe('ringCalculator', function(){
     var ringLength, radarSize, ringCalculator;
     before(function(){
