@@ -12,19 +12,9 @@ var ring_1 = require("../models/ring");
 var quadrant_1 = require("../models/quadrant");
 var radar_2 = require("../models/radar");
 var inputSanitizer_1 = require("./inputSanitizer");
-// import lodash012 from "lodash/each";
-// import lodash01 from "lodash/capitalize";
-// import lodash0 from "lodash/uniqBy";
-// import lodash from "lodash/map";
 var _ = require("lodash");
 var config_1 = require("../config/config");
 var Tabletop = require("tabletop");
-// const _ = {
-//     map: lodash,
-//     uniqBy: lodash0,
-//     capitalize: lodash01,
-//     each: lodash012,
-// };
 var plotRadar = function (title, blips) {
     document.title = title;
     d3.selectAll(".loading").remove();
@@ -81,10 +71,8 @@ var GoogleSheet = function (sheetReference, sheetName) {
             _.forEach(radarSheet, function (row) {
                 var names = row['name'].split(',');
                 names = _.map(names, function (name) { return name.trim(); });
-                console.log("names: " + JSON.stringify(names));
                 _.map(names, function (name) {
                     var details = glossarySheets[row.quadrant].find(function (element) { return element.name === name; });
-                    console.log("name: " + name + "  Details: " + JSON.stringify(details));
                     blips.push(sanatizer.sanitize({
                         name: name,
                         ring: row.ring,
@@ -94,7 +82,6 @@ var GoogleSheet = function (sheetReference, sheetName) {
                     }));
                 });
             });
-            // console.log("Blips: "+JSON.stringify(blips))
             return blips;
         }
         function createBlips(__, tabletop) {
@@ -146,7 +133,7 @@ var CSVDocument = function (url) {
             var contentValidator = new contentValidator_1.default(columnNames);
             contentValidator.verifyContent();
             contentValidator.verifyHeaders();
-            var blips = _.map(data, new inputSanitizer_1.default().sanitize);
+            var blips = _.map(data, new inputSanitizer_1.default()).sanitize;
             plotRadar(FileName(url), blips);
         }
         catch (exception) {
@@ -179,8 +166,7 @@ var FileName = function (url) {
     var search = /([^\/]+)$/;
     var match = search.exec(decodeURIComponent(url.replace(/\+/g, " ")));
     if (match != null) {
-        var str = match[1];
-        return str;
+        return match[1];
     }
     return url;
 };
@@ -194,7 +180,7 @@ var GoogleSheetInput = function () {
             sheet.init().build();
         }
         else if (domainName && domainName.endsWith('google.com') && queryParams.sheetId) {
-            var sheet = new GoogleSheet(queryParams.sheetId, queryParams.sheetName);
+            var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
             console.log(queryParams.sheetName);
             sheet.init().build();
         }

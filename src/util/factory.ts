@@ -10,31 +10,20 @@ import Ring from "../models/ring";
 import Quadrant from "../models/quadrant";
 import Radar from "../models/radar";
 import InputSanitizer from "./inputSanitizer";
-// import lodash012 from "lodash/each";
-// import lodash01 from "lodash/capitalize";
-// import lodash0 from "lodash/uniqBy";
-// import lodash from "lodash/map";
 import * as _ from "lodash";
 import config from "../config/config";
 import * as Tabletop from "tabletop";
 
-// const _ = {
-//     map: lodash,
-//     uniqBy: lodash0,
-//     capitalize: lodash01,
-//     each: lodash012,
-// };
-
-const plotRadar = function (title, blips): void {
+const plotRadar = function (title:any, blips:any): any {
     document.title = title;
     d3.selectAll(".loading").remove();
 
     let rings = _.map(_.uniqBy(blips, 'ring'), 'ring');
-    let ringMap = {};
+    let ringMap:any = {};
     let maxRings = config.maxRings;
     let numRings = 0;
 
-    _.each(rings, function (ringName, i) {
+    _.each(rings, function (ringName:string, i:number) {
         if (i == maxRings) {
             throw new MalformedDataError(ExceptionMessages.TOO_MANY_RINGS(config.maxRings));
         }
@@ -42,7 +31,7 @@ const plotRadar = function (title, blips): void {
         ringMap[ringName] = new Ring(ringName, i);
     });
 
-    let quadrants = {};
+    let quadrants:any = {};
     _.each(blips, function (blip) {
         if (!quadrants[blip.quadrant]) {
             quadrants[blip.quadrant] = new Quadrant(_.capitalize(blip.quadrant));
@@ -50,27 +39,27 @@ const plotRadar = function (title, blips): void {
         quadrants[blip.quadrant].add(new Blip(blip.name, ringMap[blip.ring], blip.isNew.toLowerCase() === 'true', blip.topic, blip.description))
     });
 
-    const numQuadrants = _.keys(quadrants).length
+    const numQuadrants = _.keys(quadrants).length;
 
-    let radar = new Radar(numQuadrants, numRings);
+    let radar:any = new Radar(numQuadrants, numRings);
     _.each(quadrants, function (quadrant) {
         radar.addQuadrant(quadrant)
     });
 
     let size = (window.innerWidth - 133) < 350 ? 350 : window.innerWidth - 133;
-    console.log(size)
-    console.log(window.innerWidth)
+    console.log(size);
+    console.log(window.innerWidth);
     if (size > 600) { size = 600 }
 
     new GraphingRadar(size, radar).init().plot();
-}
+};
 
-const GoogleSheet = function (sheetReference, sheetName): void {
+const GoogleSheet = function (sheetReference:any, sheetName:any): void {
     let self: any = {};
 
     self.build = function () {
-        let sheet: any = new Sheet(sheetReference);
-        sheet.exists(function (notFound) {
+        let sheet:any = new Sheet(sheetReference);
+        sheet.exists(function (notFound:any) {
             if (notFound) {
                 plotErrorMessage(notFound);
                 return;
@@ -81,16 +70,14 @@ const GoogleSheet = function (sheetReference, sheetName): void {
             });
         });
 
-        function createRadar(radarSheet, glossarySheets) {
-            const sanatizer = new InputSanitizer()
-            let blips = []
+        function createRadar(radarSheet:any, glossarySheets:any) {
+            const sanatizer:any = new InputSanitizer();
+            let blips:any[] = [];
             _.forEach(radarSheet, (row) => { // create multiple rows based on the names and glossary entries
-                let names = row['name'].split(',');
-                names = _.map(names, name => name.trim())
-                console.log("names: "+JSON.stringify(names));
+                let names:string[] = row['name'].split(',');
+                names = _.map(names, name => name.trim());
                 _.map(names, (name) => {
-                    let details = glossarySheets[row.quadrant].find((element) => element.name === name)
-                    console.log("name: "+name+"  Details: "+JSON.stringify(details))
+                    let details = glossarySheets[row.quadrant].find((element:any) => element.name === name);
                     blips.push(sanatizer.sanitize({
                         name: name,
                         ring: row.ring,
@@ -100,38 +87,37 @@ const GoogleSheet = function (sheetReference, sheetName): void {
                     }))
                 })
             });
-            // console.log("Blips: "+JSON.stringify(blips))
             return blips
 
         }
-        function createBlips(__, tabletop) {
+        function createBlips(__:any, tabletop:any) {
             try {
                 if (!sheetName) {
                     sheetName = tabletop.foundSheetNames[0].trim();
                 }
-                let columnNames = tabletop.sheets(sheetName).columnNames;
+                let columnNames:any = tabletop.sheets(sheetName).columnNames;
 
-                let contentValidator = new ContentValidator(columnNames);
+                let contentValidator:any = new ContentValidator(columnNames);
                 contentValidator.verifyContent();
                 contentValidator.verifyHeaders();
 
-                let all = tabletop.sheets(sheetName).all();
+                let all:any = tabletop.sheets(sheetName).all();
                 // let blips = _.map(all, new InputSanitizer().sanitize);
 
-                let quadrantNames = _.map(all, (row) => { return row.quadrant.trim() })
+                let quadrantNames:any = _.map(all, (row:any) => { return row.quadrant.trim() });
                 // get the unique quadrant names so that the glossary sheets can be imported.
-                quadrantNames = _.uniq(quadrantNames)
+                quadrantNames = _.uniq(quadrantNames);
 
                 // console.log("All: "+JSON.stringify(all))
                 // console.log("Columns: "+JSON.stringify(columnNames))
                 // console.log("Quadrants: "+JSON.stringify(quadrantNames))
-                const glossarySheets = {}
+                const glossarySheets:any = {};
                 _.forEach(quadrantNames, (sheetName) => {
                     // console.log("Sheet: "+sheetName)
                     glossarySheets[sheetName] = tabletop.sheets(sheetName).all()
                     // console.log("Sheet: "+JSON.stringify(glossarySheets[sheetName]))
-                })
-                const blips = createRadar(all, glossarySheets)
+                });
+                const blips = createRadar(all, glossarySheets);
                 plotRadar(tabletop.googleSheetName, blips);
             } catch (exception) {
                 plotErrorMessage(exception);
@@ -149,26 +135,26 @@ const GoogleSheet = function (sheetReference, sheetName): void {
     return self;
 };
 
-const CSVDocument = function (url): void {
+const CSVDocument = function (url:any):void {
     let self: any = {};
 
     self.build = function () {
         d3.csv(url, createBlips);
-    }
+    };
 
-    let createBlips = function (data) {
+    let createBlips = function (data:any) {
         try {
             let columnNames = data['columns'];
             delete data['columns'];
-            let contentValidator = new ContentValidator(columnNames);
+            let contentValidator:any = new ContentValidator(columnNames);
             contentValidator.verifyContent();
             contentValidator.verifyHeaders();
-            let blips = _.map(data, new InputSanitizer().sanitize);
+            let blips:any = _.map(data, new InputSanitizer()).sanitize);
             plotRadar(FileName(url), blips);
         } catch (exception) {
             plotErrorMessage(exception);
         }
-    }
+    };
 
     self.init = function () {
         plotLoading();
@@ -178,36 +164,35 @@ const CSVDocument = function (url): void {
     return self;
 };
 
-const QueryParams = function (queryString) {
-    let decode = function (s) {
+const QueryParams = function (queryString:any) {
+    let decode = function (s:any) {
         return decodeURIComponent(s.replace(/\+/g, " "));
     };
 
-    let search = /([^&=]+)=?([^&]*)/g;
+    let search:any = /([^&=]+)=?([^&]*)/g;
 
-    let queryParams = {};
-    let match;
+    let queryParams:any = {};
+    let match:any;
     while (match = search.exec(queryString))
         queryParams[decode(match[1])] = decode(match[2]);
 
     return queryParams
 };
 
-const DomainName = function (url) {
-    let search = /.+:\/\/([^\/]+)/;
-    let match = search.exec(decodeURIComponent(url.replace(/\+/g, " ")));
+const DomainName = function (url:any) {
+    let search:any = /.+:\/\/([^\/]+)/;
+    let match:any = search.exec(decodeURIComponent(url.replace(/\+/g, " ")));
     return match == null ? null : match[1];
-}
+};
 
-const FileName = function (url) {
-    let search = /([^\/]+)$/;
-    let match = search.exec(decodeURIComponent(url.replace(/\+/g, " ")));
+const FileName = function (url:any) {
+    let search:any = /([^\/]+)$/;
+    let match:any = search.exec(decodeURIComponent(url.replace(/\+/g, " ")));
     if (match != null) {
-        let str = match[1];
-        return str;
+        return  match[1];
     }
     return url;
-}
+};
 
 const GoogleSheetInput = function (): void {
     let self: any = {};
@@ -217,12 +202,12 @@ const GoogleSheetInput = function (): void {
         let queryParams: any = QueryParams(window.location.search.substring(1));
 
         if (domainName && queryParams.sheetId.endsWith('csv')) {
-            let sheet = new CSVDocument(queryParams.sheetId);
+            let sheet:any = new CSVDocument(queryParams.sheetId);
             sheet.init().build();
         }
         else if (domainName && domainName.endsWith('google.com') && queryParams.sheetId) {
-            let sheet = new GoogleSheet(queryParams.sheetId, queryParams.sheetName);
-            console.log(queryParams.sheetName)
+            let sheet:any = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
+            console.log(queryParams.sheetName);
 
             sheet.init().build();
         } else {
@@ -265,13 +250,13 @@ function plotLoading() {
     plotFooter(content);
 }
 
-function plotLogo(content) {
+function plotLogo(content:any) {
     content.append('div')
         .attr('class', 'input-sheet__logo')
         .html('<a href="https://marketing.move.com"><img src="/images/MoveLogo.png"></a>');
 }
 
-function plotFooter(content) {
+function plotFooter(content:any) {
     content
         .append('div')
         .attr('id', 'footer')
@@ -282,13 +267,13 @@ function plotFooter(content) {
            );
 }
 
-function plotBanner(content, text) {
+function plotBanner(content:any, text:any) {
     content.append('div')
         .attr('class', 'input-sheet__banner')
         .html(text);
 }
 
-function plotForm(content) {
+function plotForm(content:any) {
     content.append('div')
         .attr('class', 'input-sheet__form')
         .append('p')
@@ -312,7 +297,7 @@ function plotForm(content) {
     form.append('p').html("<a href='https://www.thoughtworks.com/radar/how-to-byor'>Need help?</a>");
 }
 
-function plotErrorMessage(exception) {
+function plotErrorMessage(exception:any) {
     d3.selectAll(".loading").remove();
     let message = 'Oops! It seems like there are some problems with loading your data. ';
 

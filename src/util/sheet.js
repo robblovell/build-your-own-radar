@@ -2,14 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var sheetNotFoundError_1 = require("../../src/exceptions/sheetNotFoundError");
 var exceptionMessages_1 = require("./exceptionMessages");
-var Sheet = function (sheetReference) {
-    var self = {};
-    (function () {
-        var matches = sheetReference.match("https:\\/\\/docs.google.com\\/spreadsheets\\/d\\/(.*?)($|\\/$|\\/.*|\\?.*)");
-        self.id = matches !== null ? matches[1] : sheetReference;
-    })();
-    self.exists = function (callback) {
-        var feedURL = "https://spreadsheets.google.com/feeds/worksheets/" + self.id + "/public/basic?alt=json";
+var Sheet = /** @class */ (function () {
+    function Sheet(sheetReference) {
+        this.sheetReference = {};
+        this.id = 0;
+        this.sheetReference = sheetReference;
+        var matches = this.sheetReference.match("https:\\/\\/docs.google.com\\/spreadsheets\\/d\\/(.*?)($|\\/$|\\/.*|\\?.*)");
+        this.id = matches !== null ? matches[1] : this.sheetReference;
+    }
+    Sheet.prototype.exists = function (callback) {
+        var feedURL = "https://spreadsheets.google.com/feeds/worksheets/" + this.id + "/public/basic?alt=json";
         // TODO: Move this out (as HTTPClient)
         var xhr = new XMLHttpRequest();
         xhr.open('GET', feedURL, true);
@@ -25,7 +27,8 @@ var Sheet = function (sheetReference) {
         };
         xhr.send(null);
     };
-    return self;
-};
+    ;
+    return Sheet;
+}());
 exports.default = Sheet;
 //# sourceMappingURL=sheet.js.map

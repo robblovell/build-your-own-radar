@@ -1,15 +1,19 @@
-const Ring = function (name:any, order:any):void {
-  var self:any = {};
+class Ring {
+    _name: string = "";
+    _order: number = 0;
 
-  self.name = function () {
-    return name;
-  };
+    constructor(name: any, order: any) {
+        this._name = name;
+        this._order = order;
+    }
 
-  self.order = function () {
-    return order;
-  };
+    name() {
+        return this._name;
+    };
 
-  return self;
+    order() {
+        return this._order;
+    };
+
 };
-
 export default Ring;
