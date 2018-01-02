@@ -34,15 +34,17 @@ You can specify between 2 and 8 quadrants and 2 to 6 rings
 Define a sheet for each quadrant:
 
 The "tools" sheet is for the tools quadrant. This will be a glossary of the things that are named for that quadrant.
-| name	      | isNew	 | description
+
+| name        | isNew    | description
 |-------------|----------|-------------------------------------------------|
-| Tech1	      | FALSE	 | A thing's description, useful information here!
-| Tech2	      | TRUE	 | A thing's description, useful information here!
+| Tech1       | FALSE    | A thing's description, useful information here! |
+| Tech2       | TRUE     | A thing's description, useful information here! |
 
 Likewise, the "techniques" sheet is for the techniques quadrant. This will be a glossary of the things that are named for that quadrant.
-| name	      | isNew	 | description
+
+| name        | isNew    | description
 |-------------|----------|-------------------------------------------------|
-| Tech3	      | FALSE	 | A thing's description, useful information here!
+| Tech3       | FALSE    | A thing's description, useful information here! |
 
 and so on for the other sheets.
 
