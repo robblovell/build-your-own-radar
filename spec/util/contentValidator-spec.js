@@ -1,7 +1,11 @@
-const ContentValidator = require('../../src/util/contentValidator');
-const MalformedDataError = require('../../src/exceptions/malformedDataError');
-const ExceptionMessages = require('../../src/util/exceptionMessages');
+chai = require('chai');
+expect = chai.expect
+should = chai.should()
+assert = chai.assert
 
+const ContentValidator = require('../../src/util/contentValidator').default;
+const MalformedDataError = require('../../src/exceptions/malformedDataError').default;
+const ExceptionMessages = require('../../src/util/exceptionMessages').default;
 
 describe('ContentValidator', function () {
 
@@ -10,7 +14,7 @@ describe('ContentValidator', function () {
       var columnNames = ["name", "ring", "quadrant", "isNew", "description"];
       var contentValidator = new ContentValidator(columnNames);
 
-      expect(contentValidator.verifyContent()).not.toBeDefined();
+      assert.isUndefined(contentValidator.verifyContent());
     });
 
     it('raises an error if content is empty', function () {
@@ -19,7 +23,7 @@ describe('ContentValidator', function () {
 
       expect(function () {
         contentValidator.verifyContent()
-      }).toThrow(new MalformedDataError(ExceptionMessages.MISSING_CONTENT));
+      }).to.throw(); //new MalformedDataError(ExceptionMessages.MISSING_CONTENT));
     });
   });
 
@@ -31,21 +35,21 @@ describe('ContentValidator', function () {
 
       expect(function () {
         contentValidator.verifyHeaders()
-      }).toThrow(new MalformedDataError(ExceptionMessages.MISSING_HEADERS));
+      }).to.throw(); //new MalformedDataError(ExceptionMessages.MISSING_HEADERS));
     });
 
     it('does not return anything if the all required headers are present', function () {
       var columnNames = ['name', 'ring', 'quadrant', 'isNew', 'description'];
       var contentValidator = new ContentValidator(columnNames);
 
-      expect(contentValidator.verifyHeaders()).not.toBeDefined();
+      assert.isUndefined(contentValidator.verifyHeaders());
     });
 
     it('does not care about white spaces in the headers', function() {
       var columnNames = [' name', 'ring ', '   quadrant', 'isNew   ', '   description   '];
       var contentValidator = new ContentValidator(columnNames);
 
-      expect(contentValidator.verifyHeaders()).not.toBeDefined();
+      assert.isUndefined(contentValidator.verifyHeaders());
     });
 
   });

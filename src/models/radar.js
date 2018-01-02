@@ -5,8 +5,8 @@ var exceptionMessages_1 = require("../util/exceptionMessages");
 var config_1 = require("../config/config");
 var _ = require("lodash");
 var Radar = function (numQuadrants, numRings) {
-    if (numQuadrants === void 0) { numQuadrants = 6; }
-    if (numRings === void 0) { numRings = 4; }
+    if (numQuadrants === void 0) { numQuadrants = 8; }
+    if (numRings === void 0) { numRings = 6; }
     var self, quadrants, blipNumber, addingQuadrant;
     var titles = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth'];
     config_1.default.quadrants = numQuadrants;
@@ -15,8 +15,11 @@ var Radar = function (numQuadrants, numRings) {
     blipNumber = 0;
     addingQuadrant = 0;
     quadrants = [];
+    var minQuadrants = config_1.default.minQuadrants;
+    var maxQuadrants = config_1.default.maxQuadrants;
+    var divisionAngle = 360 / config_1.default.quadrants;
     for (var i = 0; i < config_1.default.quadrants; i++) {
-        quadrants.push({ order: titles[i], startAngle: config_1.default.startLocation + i * config_1.default.divisionAngle });
+        quadrants.push({ order: titles[i], startAngle: config_1.default.startLocation + i * divisionAngle });
     }
     self = {};
     function setNumbers(blips) {
@@ -25,21 +28,26 @@ var Radar = function (numQuadrants, numRings) {
         });
     }
     self.addQuadrant = function (quadrant) {
-        if (addingQuadrant >= config_1.default.maxQuadrants) {
-            throw new malformedDataError_1.default(exceptionMessages_1.default.TOO_MANY_QUADRANTS(config_1.default.quadrants));
+        if (addingQuadrant >= maxQuadrants) {
+            throw new malformedDataError_1.default(exceptionMessages_1.default.TOO_MANY_QUADRANTS(numQuadrants));
         }
         quadrants[addingQuadrant].quadrant = quadrant;
         setNumbers(quadrant.blips());
-        addingQuadrant++;
+        numQuadrants = addingQuadrant++;
     };
     function allQuadrants() {
-        if (addingQuadrant < config_1.default.minQuadrants)
-            throw new malformedDataError_1.default(exceptionMessages_1.default.LESS_THAN_FOUR_QUADRANTS(config_1.default.quadrants));
+        if (addingQuadrant < minQuadrants)
+            throw new malformedDataError_1.default(exceptionMessages_1.default.LESS_THAN_FOUR_QUADRANTS(numQuadrants));
         return _.map(quadrants, 'quadrant');
     }
     function allBlips() {
         return allQuadrants().reduce(function (blips, quadrant) {
-            return blips.concat(quadrant.blips());
+            if (quadrant) {
+                return blips.concat(quadrant.blips());
+            }
+            else {
+                return blips;
+            }
         }, []);
     }
     self.rings = function () {

@@ -1,32 +1,35 @@
-const Quadrant = require('../../src/models/quadrant');
-const Blip = require('../../src/models/blip');
+chai = require('chai');
+expect = chai.expect;
+
+const Quadrant = require('../../src/models/quadrant').default;
+const Blip = require('../../src/models/blip').default;
 
 describe('Quadrant', function () {
   it('has a name', function () {
-    var quadrant = new Quadrant('My Quadrant');
+    const quadrant = new Quadrant('My Quadrant');
 
-    expect(quadrant.name()).toEqual('My Quadrant');
+    expect(quadrant.name()).equal('My Quadrant');
   });
 
   it('has no blips by default', function () {
-    var quadrant = new Quadrant('My Quadrant');
+    const quadrant = new Quadrant('My Quadrant');
 
-    expect(quadrant.blips()).toEqual([]);
+    expect(quadrant.blips()).that.eql([]);
   });
 
   it('can add a single blip', function () {
-    var quadrant = new Quadrant('My Quadrant');
+    const quadrant = new Quadrant('My Quadrant');
 
     quadrant.add(new Blip());
 
-    expect(quadrant.blips().length).toEqual(1);
+    expect(quadrant.blips().length).equal(1);
   });
 
   it('can add multiple blips', function () {
-    var quadrant = new Quadrant('My Quadrant');
+    const quadrant = new Quadrant('My Quadrant');
 
     quadrant.add([new Blip(), new Blip()]);
 
-    expect(quadrant.blips().length).toEqual(2);
+    expect(quadrant.blips().length).equal(2);
   });
 });

@@ -1,8 +1,13 @@
-const RingCalculator = require('../../src/util/ringCalculator');
+chai = require('chai');
+expect = chai.expect
+should = chai.should()
+assert = chai.assert
+
+const RingCalculator = require('../../src/util/ringCalculator').default;
 
 describe('ringCalculator', function(){
     var ringLength, radarSize, ringCalculator;
-    beforeAll(function(){
+    before(function(){
         ringLength = 4;
         radarSize = 500;
         ringCalculator = new RingCalculator(ringLength, radarSize);
@@ -10,11 +15,11 @@ describe('ringCalculator', function(){
     });
 
     it('sums up the sequences', function(){
-        expect(ringCalculator.sum(ringLength)).toEqual(16);
+        expect(ringCalculator.sum(ringLength)).equal(36);
     });
 
     it('calculates the correct radius', function(){
-        expect(ringCalculator.getRadius(ringLength)).toEqual(radarSize);
+        expect(ringCalculator.getRadius(ringLength)).equal(radarSize);
     });
 
 });

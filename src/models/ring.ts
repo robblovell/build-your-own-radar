@@ -1,19 +1,19 @@
 class Ring {
-    _name: string = "";
-    _order: number = 0;
+    aname: string;
+    aorder: number;
 
-    constructor(name: any, order: any) {
-        this._name = name;
-        this._order = order;
+    constructor(name: any="", order: any=1) {
+        this.aname = name;
+        this.aorder = order;
     }
 
     name() {
-        return this._name;
+        return this.aname;
     };
 
     order() {
-        return this._order;
+        return this.aorder;
     };
 
-};
+}
 export default Ring;

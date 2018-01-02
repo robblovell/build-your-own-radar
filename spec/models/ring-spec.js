@@ -1,15 +1,19 @@
-const Ring = require('../../src/models/ring');
+chai = require('chai');
+expect = chai.expect;
+should = chai.should();
+assert = chai.assert;
+
+var Ring = require('../../src/models/ring').default;
 
 describe('Ring', function () {
+
   it('has a name', function () {
-    var ring = Ring('My Ring');
-
-    expect(ring.name()).toEqual('My Ring');
+    const ring = new Ring('My Ring');
+    expect(ring.name()).equal('My Ring');
   });
-
   it('has a order', function () {
-    var ring = new Ring('My Ring', 0);
-
-    expect(ring.order()).toEqual(0);
+    const ring = new Ring('My Ring', 0);
+    expect(ring.order()).equal(0);
   });
 });
+

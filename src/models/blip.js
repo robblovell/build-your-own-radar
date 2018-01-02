@@ -1,32 +1,49 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var IDEAL_BLIP_WIDTH = 22;
-var Blip = function (name, ring, isNew, topic, description) {
-    var self = {};
-    var number = -1;
-    self.width = IDEAL_BLIP_WIDTH;
-    self.name = function () {
-        return name;
+var Blip = /** @class */ (function () {
+    function Blip(name, ring, isNew, topic, description) {
+        this.width = IDEAL_BLIP_WIDTH;
+        this._number = -1;
+        this._name = "";
+        this._isNew = false;
+        this._topic = "";
+        this._description = "";
+        this._name = name;
+        this._isNew = isNew;
+        this._topic = topic;
+        this._description = description;
+        this._ring = ring;
+    }
+    Blip.prototype.name = function () {
+        return this._name;
     };
-    self.topic = function () {
-        return topic || '';
+    ;
+    Blip.prototype.topic = function () {
+        return this._topic || '';
     };
-    self.description = function () {
-        return description || '';
+    ;
+    Blip.prototype.description = function () {
+        return this._description || '';
     };
-    self.isNew = function () {
-        return isNew;
+    ;
+    Blip.prototype.isNew = function () {
+        return this._isNew;
     };
-    self.ring = function () {
-        return ring;
+    ;
+    Blip.prototype.ring = function () {
+        return this._ring;
     };
-    self.number = function () {
-        return number;
+    ;
+    Blip.prototype.number = function () {
+        return this._number;
     };
-    self.setNumber = function (newNumber) {
-        number = newNumber;
+    ;
+    Blip.prototype.setNumber = function (newNumber) {
+        this._number = newNumber;
     };
-    return self;
-};
+    ;
+    return Blip;
+}());
 exports.default = Blip;
 //# sourceMappingURL=blip.js.map

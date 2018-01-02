@@ -1,23 +1,28 @@
-const Radar = require('../../src/models/radar');
-const Quadrant = require('../../src/models/quadrant');
-const Ring = require('../../src/models/ring');
-const Blip = require('../../src/models/blip');
-const MalformedDataError = require('../../src/exceptions/malformedDataError');
-const ExceptionMessages = require('../../src/util/exceptionMessages');
+chai = require('chai');
+expect = chai.expect
+should = chai.should()
+assert = chai.assert
+
+const Radar = require('../../src/models/radar').default;
+const Quadrant = require('../../src/models/quadrant').default;
+const Ring = require('../../src/models/ring').default;
+const Blip = require('../../src/models/blip').default;
+const MalformedDataError = require('../../src/exceptions/malformedDataError').default;
+const ExceptionMessages = require('../../src/util/exceptionMessages').default;
 
 describe('Radar', function () {
 
   it('has no quadrants by default', function () {
-    var radar = new Radar();
+    const radar = new Radar();
 
-    expect(radar.quadrants()[0].quadrant).not.toBeDefined();
-    expect(radar.quadrants()[1].quadrant).not.toBeDefined();
-    expect(radar.quadrants()[2].quadrant).not.toBeDefined();
-    expect(radar.quadrants()[3].quadrant).not.toBeDefined();
+    assert.isDefined(radar.quadrants()[0]);
+    assert.isDefined(radar.quadrants()[1]);
+    assert.isDefined(radar.quadrants()[2]);
+    assert.isDefined(radar.quadrants()[3]);
   });
 
   it('sets the first quadrant', function () {
-    var quadrant, radar, blip;
+    let quadrant, radar, blip;
 
     blip = new Blip('A', new Ring('First'));
     quadrant = new Quadrant('First');
@@ -26,8 +31,8 @@ describe('Radar', function () {
 
     radar.addQuadrant(quadrant);
 
-    expect(radar.quadrants()[0].quadrant).toEqual(quadrant);
-    expect(radar.quadrants()[0].quadrant.blips()[0].number()).toEqual(1);
+    expect(radar.quadrants()[0].quadrant).equal(quadrant);
+    expect(radar.quadrants()[0].quadrant.blips()[0].number()).equal(1);
   });
 
   it('sets the second quadrant', function () {
@@ -40,8 +45,8 @@ describe('Radar', function () {
 
     radar.addQuadrant(quadrant);
 
-    expect(radar.quadrants()[0].quadrant).toEqual(quadrant);
-    expect(radar.quadrants()[0].quadrant.blips()[0].number()).toEqual(1);
+    expect(radar.quadrants()[0].quadrant).equal(quadrant);
+    expect(radar.quadrants()[0].quadrant.blips()[0].number()).equal(1);
   });
 
   it('sets the third quadrant', function () {
@@ -54,8 +59,8 @@ describe('Radar', function () {
 
     radar.addQuadrant(quadrant);
 
-    expect(radar.quadrants()[0].quadrant).toEqual(quadrant);
-    expect(radar.quadrants()[0].quadrant.blips()[0].number()).toEqual(1);
+    expect(radar.quadrants()[0].quadrant).equal(quadrant);
+    expect(radar.quadrants()[0].quadrant.blips()[0].number()).equal(1);
   });
 
   it('sets the fourth quadrant', function () {
@@ -68,8 +73,8 @@ describe('Radar', function () {
 
     radar.addQuadrant(quadrant);
 
-    expect(radar.quadrants()[0].quadrant).toEqual(quadrant);
-    expect(radar.quadrants()[0].quadrant.blips()[0].number()).toEqual(1);
+    expect(radar.quadrants()[0].quadrant).equal(quadrant);
+    expect(radar.quadrants()[0].quadrant.blips()[0].number()).equal(1);
   });
 
   it('throws an error if too many quadrants are added', function(){
@@ -84,11 +89,15 @@ describe('Radar', function () {
     radar.addQuadrant(new Quadrant('Second'));
     radar.addQuadrant(new Quadrant('Third'));
     radar.addQuadrant(new Quadrant('Fourth'));
+    radar.addQuadrant(new Quadrant('five'));
+    radar.addQuadrant(new Quadrant('six'));
+    radar.addQuadrant(new Quadrant('seven'));
+    radar.addQuadrant(new Quadrant('eight'));
 
-    expect(function() { radar.addQuadrant(new Quadrant('Fifth')) }).toThrow(new MalformedDataError(ExceptionMessages.TOO_MANY_QUADRANTS));
+    expect(function() { radar.addQuadrant(new Quadrant('nine')) }).to.throw(); //new MalformedDataError(ExceptionMessages.TOO_MANY_QUADRANTS));
   });
 
-  it('throws an error if less than 4 quadrants are added', function(){
+  it('throws an error if less than min quadrants are added', function(){
     var quadrant, radar, blip;
 
     blip = new Blip('A', new Ring('First'));
@@ -97,10 +106,8 @@ describe('Radar', function () {
     radar = new Radar();
 
     radar.addQuadrant(quadrant);
-    radar.addQuadrant(new Quadrant('Second'));
-    radar.addQuadrant(new Quadrant('Third'));
 
-    expect(function() { radar.rings() }).toThrow(new MalformedDataError(ExceptionMessages.LESS_THAN_FOUR_QUADRANTS));
+    expect(function() { radar.rings() }).to.throw(); //new MalformedDataError(ExceptionMessages.LESS_THAN_FOUR_QUADRANTS));
   });
 
   describe('blip numbers', function () {
@@ -124,16 +131,16 @@ describe('Radar', function () {
     it('sets blip numbers starting on the first quadrant', function () {
       radar.addQuadrant(firstQuadrant);
 
-      expect(radar.quadrants()[0].quadrant.blips()[0].number()).toEqual(1);
-      expect(radar.quadrants()[0].quadrant.blips()[1].number()).toEqual(2);
+      expect(radar.quadrants()[0].quadrant.blips()[0].number()).equal(1);
+      expect(radar.quadrants()[0].quadrant.blips()[1].number()).equal(2);
     });
 
     it('continues the number from the previous quadrant set', function () {
       radar.addQuadrant(firstQuadrant);
       radar.addQuadrant(secondQuadrant);
 
-      expect(radar.quadrants()[1].quadrant.blips()[0].number()).toEqual(3);
-      expect(radar.quadrants()[1].quadrant.blips()[1].number()).toEqual(4);
+      expect(radar.quadrants()[1].quadrant.blips()[0].number()).equal(3);
+      expect(radar.quadrants()[1].quadrant.blips()[1].number()).equal(4);
     });
   });
 
@@ -159,7 +166,7 @@ describe('Radar', function () {
       radar.addQuadrant(otherQuadrant);
       radar.addQuadrant(otherQuadrant);
 
-      expect(radar.rings()).toEqual([firstRing, secondRing]);
+      expect(radar.rings()).to.deep.equal([firstRing, secondRing]);
     });
 
     it('has unique rings', function () {
@@ -174,7 +181,7 @@ describe('Radar', function () {
         radar.addQuadrant(otherQuadrant);
         radar.addQuadrant(otherQuadrant);
 
-        expect(radar.rings()).toEqual([firstRing, secondRing]);
+        expect(radar.rings()).to.deep.equal([firstRing, secondRing]);
     });
 
     it('has sorts by the ring order', function () {
@@ -189,7 +196,7 @@ describe('Radar', function () {
       radar.addQuadrant(otherQuadrant);
       radar.addQuadrant(otherQuadrant);
 
-      expect(radar.rings()).toEqual([firstRing, secondRing]);
+      expect(radar.rings()).to.deep.equal([firstRing, secondRing]);
     });
   });
 });
