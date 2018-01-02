@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/thoughtworks/build-your-own-radar.svg?branch=master)](https://travis-ci.org/thoughtworks/build-your-own-radar)
-
-A library that generates an interactive radar, inspired by [thoughtworks.com/radar](http://thoughtworks.com/radar).
+A library that generates an interactive radar, modified from but inspired by [thoughtworks.com/radar](http://thoughtworks.com/radar).
 
 The format of the google docs sheet is different than the original thoughtworks radar in that there are follow on 
 sheets that contain information defining the terms in the "name" column.  Instead of having one term per row
@@ -46,7 +44,7 @@ Likewise, the "techniques" sheet is for the techniques quadrant. This will be a 
 |-------------|----------|-------------------------------------------------|
 | Tech3       | FALSE    | A thing's description, useful information here! |
 
-and so on for the other sheets.
+and so on for the other quadrant sheets.
 
 ### Sharing the sheet
 
