@@ -4,11 +4,6 @@ var malformedDataError_1 = require("../exceptions/malformedDataError");
 var exceptionMessages_1 = require("../util/exceptionMessages");
 var config_1 = require("../config/config");
 var _ = require("lodash");
-// const _ = {
-//   map: map,
-//   uniqBy: uniqBy,
-//   sortBy: sortBy
-// };
 var Radar = function (numQuadrants, numRings) {
     if (numQuadrants === void 0) { numQuadrants = 6; }
     if (numRings === void 0) { numRings = 4; }
@@ -62,3 +57,4 @@ var Radar = function (numQuadrants, numRings) {
     return self;
 };
 exports.default = Radar;
+//# sourceMappingURL=radar.js.map

@@ -10,8 +10,9 @@ var InputSanitizer = function () {
             'a': ['href']
         }
     };
+    var allowedTags = [];
     var restrictedOptions = {
-        allowedTags: [],
+        allowedTags: allowedTags,
         allowedAttributes: {},
         textFilter: function (text) {
             return text.replace(/&amp;/, '&');
@@ -37,3 +38,4 @@ var InputSanitizer = function () {
     return self;
 };
 exports.default = InputSanitizer;
+//# sourceMappingURL=inputSanitizer.js.map

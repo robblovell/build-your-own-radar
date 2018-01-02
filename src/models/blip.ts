@@ -1,41 +1,39 @@
 const IDEAL_BLIP_WIDTH = 22;
-const Blip = function (name, ring, isNew, topic, description):void {
-  let self, number;
+const Blip = function (name: string, ring: string, isNew: boolean, topic: string, description: string): void {
+    const self: any = {};
+    let number: number = -1;
 
-  self = {};
-  number = -1;
+    self.width = IDEAL_BLIP_WIDTH;
 
-  self.width = IDEAL_BLIP_WIDTH;
+    self.name = function () {
+        return name;
+    };
 
-  self.name = function () {
-    return name;
-  };
+    self.topic = function () {
+        return topic || '';
+    };
 
-  self.topic = function () {
-    return topic || '';
-  };
+    self.description = function () {
+        return description || '';
+    };
 
-  self.description = function () {
-    return description || '';
-  };
+    self.isNew = function () {
+        return isNew;
+    };
 
-  self.isNew = function () {
-    return isNew;
-  };
+    self.ring = function () {
+        return ring;
+    };
 
-  self.ring = function () {
-    return ring;
-  };
+    self.number = function () {
+        return number;
+    };
 
-  self.number = function () {
-    return number;
-  };
+    self.setNumber = function (newNumber: number) {
+        number = newNumber;
+    };
 
-  self.setNumber = function (newNumber) {
-    number = newNumber;
-  };
-
-  return self;
+    return self;
 };
 
 export default Blip;

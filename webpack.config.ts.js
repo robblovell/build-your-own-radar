@@ -12,7 +12,9 @@ let isProd = args.prod;
 let isDev = args.dev;
 
 let main = ['./src/site.js'];
+let maints = ['./src/site.ts'];
 let common = ['./src/common.js'];
+let commonts = ['./src/common.ts'];
 let devtool;
 
 if (isDev) {
@@ -51,8 +53,8 @@ if (isProd) {
 
 module.exports = {
   entry: {
-    'main': main,
-    'common': common
+    'main': maints,
+    'common': commonts
   },
   node: {
     fs: 'empty',
@@ -60,6 +62,7 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty'
   },
+  extensions: [".ts", ".tsx", ".js", ".json"],
 
   output: {
     path: buildPath,
@@ -69,15 +72,13 @@ module.exports = {
 
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        use: ["source-map-loader"],
-        enforce: "pre"
-      }
+      {test: /\.ts?$/, loader: 'ts-loader'},
+      {enforce: "pre", test: /\.js$/, loader: "source-map-loader"}
     ],
     loaders: [
+
       {test: /\.json$/, loader: 'json'},
-      {test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
+      // { test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
       {test: /\.scss$/, exclude: /node_modules/, loader: ExtractTextPlugin.extract('style', 'css?sourceMap!sass')},
       {
         test: /\.(png|jpg|ico)$/,

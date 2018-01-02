@@ -11,24 +11,25 @@ const InputSanitizer = function (): void {
     }
   };
 
+  const allowedTags:any = [];
   const restrictedOptions = {
-    allowedTags: [],
+    allowedTags: allowedTags,
     allowedAttributes: {},
-    textFilter: function (text) {
+    textFilter: function (text:any) {
       return text.replace(/&amp;/, '&');
     }
   };
 
-  function trimWhiteSpaces(blip) {
-    const processedBlip = {};
-    _.forOwn(blip, function (value, key) {
+  function trimWhiteSpaces(blip:any) {
+    const processedBlip:any = {};
+    _.forOwn(blip, function (value:any, key:any) {
       processedBlip[key.trim()] = value.trim();
     });
     return processedBlip;
   }
 
   const self: any = {};
-  self.sanitize = function (rawBlip) {
+  self.sanitize = function (rawBlip:any) {
     const blip:any = trimWhiteSpaces(rawBlip);
     blip.description = sanitizeHtml(blip.description, relaxedOptions);
     blip.name = sanitizeHtml(blip.name, restrictedOptions);
@@ -38,7 +39,6 @@ const InputSanitizer = function (): void {
 
     return blip;
   };
-
   return self;
 };
 

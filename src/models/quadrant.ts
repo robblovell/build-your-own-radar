@@ -1,5 +1,5 @@
-const Quadrant = function (name):void {
-  var self, blips;
+const Quadrant = function (name:string):void {
+  var self:any, blips:any;
 
   self = {};
   blips = [];
@@ -8,7 +8,7 @@ const Quadrant = function (name):void {
     return name;
   };
 
-  self.add = function (newBlips) {
+  self.add = function (newBlips:any) {
     if (Array.isArray(newBlips)) {
       blips = blips.concat(newBlips);
     } else {

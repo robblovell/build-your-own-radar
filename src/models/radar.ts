@@ -2,14 +2,9 @@ import MalformedDataError from "../exceptions/malformedDataError"
 import ExceptionMessages from '../util/exceptionMessages'
 import config from '../config/config'
 import * as _ from "lodash";
-// const _ = {
-//   map: map,
-//   uniqBy: uniqBy,
-//   sortBy: sortBy
-// };
 
 const Radar = function(numQuadrants=6, numRings=4):void {
-  let self, quadrants, blipNumber, addingQuadrant;
+  let self:any, quadrants:any, blipNumber:any, addingQuadrant:any;
   const titles = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth'];
   config.quadrants = numQuadrants;
   config.rings = numRings;
@@ -24,13 +19,13 @@ const Radar = function(numQuadrants=6, numRings=4):void {
 
   self = {};
 
-  function setNumbers(blips) {
-    blips.forEach(function (blip) {
+  function setNumbers(blips:any) {
+    blips.forEach(function (blip:any) {
       blip.setNumber(++blipNumber);
     });
   }
 
-  self.addQuadrant = function (quadrant) {
+  self.addQuadrant = function (quadrant:any) {
     if(addingQuadrant >= config.maxQuadrants) {
       throw new MalformedDataError(ExceptionMessages.TOO_MANY_QUADRANTS(config.quadrants));
     }
@@ -47,17 +42,17 @@ const Radar = function(numQuadrants=6, numRings=4):void {
   }
 
   function allBlips() {
-    return allQuadrants().reduce(function (blips, quadrant) {
+    return allQuadrants().reduce(function (blips:any, quadrant:any) {
       return blips.concat(quadrant.blips());
     }, []);
   }
 
   self.rings = function () {
-    return _.sortBy(_.map(_.uniqBy(allBlips(), function (blip) {
+    return _.sortBy(_.map(_.uniqBy(allBlips(), function (blip:any) {
       return blip.ring().name();
-    }), function (blip) {
+    }), function (blip:any) {
       return blip.ring();
-    }), function (ring) {
+    }), function (ring:any) {
       return ring.order();
     });
   };

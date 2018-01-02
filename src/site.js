@@ -6,3 +6,4 @@ require("./images/MoveLogo.png");
 require("./images/radar_legend.png");
 var factory_1 = require("./util/factory");
 factory_1.default().build();
+//# sourceMappingURL=site.js.map

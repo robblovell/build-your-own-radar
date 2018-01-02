@@ -1,4 +1,4 @@
-const Ring = function (name, order):void {
+const Ring = function (name:any, order:any):void {
   var self:any = {};
 
   self.name = function () {

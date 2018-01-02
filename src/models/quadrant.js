@@ -21,3 +21,4 @@ var Quadrant = function (name) {
     return self;
 };
 exports.default = Quadrant;
+//# sourceMappingURL=quadrant.js.map

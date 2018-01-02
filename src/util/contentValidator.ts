@@ -4,9 +4,9 @@ import MalformedDataError from "../../src/exceptions/malformedDataError";
 
 import ExceptionMessages from "./exceptionMessages";
 
-const ContentValidator = function (columnNames):void {
+const ContentValidator = function (columnNames:any):void {
   var self:any = {};
-  columnNames = columnNames.map(function(columnName) {
+  columnNames = columnNames.map(function(columnName:any) {
     return columnName.trim();
   });
 

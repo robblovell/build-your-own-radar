@@ -11,3 +11,4 @@ var Ring = function (name, order) {
     return self;
 };
 exports.default = Ring;
+//# sourceMappingURL=ring.js.map

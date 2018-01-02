@@ -2,9 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var IDEAL_BLIP_WIDTH = 22;
 var Blip = function (name, ring, isNew, topic, description) {
-    var self, number;
-    self = {};
-    number = -1;
+    var self = {};
+    var number = -1;
     self.width = IDEAL_BLIP_WIDTH;
     self.name = function () {
         return name;
@@ -30,3 +29,4 @@ var Blip = function (name, ring, isNew, topic, description) {
     return self;
 };
 exports.default = Blip;
+//# sourceMappingURL=blip.js.map

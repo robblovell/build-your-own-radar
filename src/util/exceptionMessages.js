@@ -10,3 +10,4 @@ var ExceptionMessages = {
     SHEET_NOT_FOUND: 'Oops! We can’t find the Google Sheet you’ve entered. Can you check the URL?'
 };
 exports.default = ExceptionMessages;
+//# sourceMappingURL=exceptionMessages.js.map

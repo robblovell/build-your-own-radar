@@ -11,3 +11,4 @@ var config = {
     divisionAngle: 0
 };
 exports.default = config;
+//# sourceMappingURL=config.js.map
