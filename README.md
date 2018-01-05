@@ -8,9 +8,9 @@ in the first sheet, a comma separated list of terms can be given in the names co
 
 You can see this version of the radar in action at https://localhost:8080 if you run the dev server:
 
-npm install
-npm test
-npm dev
+* npm install
+* npm test
+* npm dev
 
 If you plug in [this data](https://docs.google.com/spreadsheets/d/1q11Dv2vz04UEvaEAAS4c4Cj36NVPUe1rLemNAT7lj4E/edit#gid=2082321659). 
 
